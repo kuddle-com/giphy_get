@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-class GiphyTabBottom extends StatefulWidget {
+class TabBottom extends StatefulWidget {
   final bool isGIF;
 
-  const GiphyTabBottom({
+  const TabBottom({
     Key? key,
     required this.isGIF,
   }) : super(key: key);
 
   @override
-  State<GiphyTabBottom> createState() => _GiphyTabBottomState();
+  State<TabBottom> createState() => _TabBottomState();
 }
 
-class _GiphyTabBottomState extends State<GiphyTabBottom> {
+class _TabBottomState extends State<TabBottom> {
 
   @override
-  void didUpdateWidget(covariant GiphyTabBottom oldWidget) {
+  void didUpdateWidget(covariant TabBottom oldWidget) {
     super.didUpdateWidget(oldWidget);
   }
 

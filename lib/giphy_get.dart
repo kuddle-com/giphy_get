@@ -11,6 +11,7 @@ import 'package:giphy_get/src/providers/sheet_provider.dart';
 import 'package:giphy_get/src/providers/tab_provider.dart';
 import 'package:giphy_get/src/views/main_view.dart';
 import 'package:provider/provider.dart';
+
 // Giphy Client Export
 export 'package:giphy_get/src/client/giphy_client.dart';
 export 'package:giphy_get/src/client/models/collection.dart';
@@ -41,7 +42,7 @@ class GiphyGet {
     required String tenorApiKey,
     required String giphyApiKey,
     String tenorMediaFilter = TenorType.tinyGif,
-            String clientKey = "",
+    String clientKey = "",
     String giphyRating = GiphyRating.g,
     String lang = GiphyLanguage.english,
     String randomID = "",
@@ -91,7 +92,7 @@ class GiphyGet {
             create: (ctx) => TabProvider(
               tenorApiKey: tenorApiKey,
               giphyApiKey: giphyApiKey,
-                  clientKey: clientKey,
+              clientKey: clientKey,
               tenorMediaFilter: tenorMediaFilter,
               randomID: randomID,
               tabColor: tabColor ?? Theme.of(context).colorScheme.secondary,

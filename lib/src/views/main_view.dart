@@ -41,6 +41,9 @@ class _MainViewState extends State<MainView>
   // Tab Controller
   late TabController _tabController;
 
+  // Boolean to track isGIF
+  bool isGIF = true;
+
   @override
   void initState() {
     super.initState();
@@ -53,6 +56,13 @@ class _MainViewState extends State<MainView>
       ].where((isShown) => isShown).length,
       vsync: this,
     );
+
+    _tabController.addListener(() {
+      setState(() {
+        // Update the isGIF based on the current tab index
+        isGIF = _tabController.index == 0;
+      });
+    });
   }
 
   @override
@@ -107,7 +117,7 @@ class _MainViewState extends State<MainView>
               showEmojis: widget.showEmojis,
             ),
           ),
-          widget.tabBottomBuilder?.call(context) ?? GiphyTabBottom(isGIF: _tabController.index == 0),
+          widget.tabBottomBuilder?.call(context) ?? TabBottom(isGIF: isGIF),
         ],
       );
 }
