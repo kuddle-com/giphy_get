@@ -12,7 +12,7 @@ import 'package:giphy_get/src/views/main_view.dart';
 import 'package:provider/provider.dart';
 
 // Giphy Client Export
-export 'package:giphy_get/src/client/client.dart';
+export 'package:giphy_get/src/client/giphy_client.dart';
 export 'package:giphy_get/src/client/models/collection.dart';
 export 'package:giphy_get/src/client/models/gif.dart';
 export 'package:giphy_get/src/client/models/image.dart';
@@ -38,8 +38,10 @@ class GiphyGet {
   // Show Bottom Sheet
   static Future<GiphyGif?> getGif({
     required BuildContext context,
-    required String apiKey,
-    String rating = GiphyRating.g,
+    required String tenorApiKey,
+    required String giphyApiKey,
+            String clientKey = "",
+    String giphyRating = GiphyRating.g,
     String lang = GiphyLanguage.english,
     String randomID = "",
     String searchText = "",
@@ -56,8 +58,11 @@ class GiphyGet {
     TabBottomBuilder? tabBottomBuilder,
     SearchAppBarBuilder? searchAppBarBuilder,
   }) {
-    if (apiKey == "") {
-      throw Exception("apiKey must be not null or not empty");
+    if (tenorApiKey == "") {
+      throw Exception("tenorApiKey must be not null or not empty");
+    }
+    if (giphyApiKey == "") {
+      throw Exception("giphyApiKey must be not null or not empty");
     }
 
     return showModalBottomSheet<GiphyGif>(
@@ -83,7 +88,9 @@ class GiphyGet {
           ),
           ChangeNotifierProvider(
             create: (ctx) => TabProvider(
-              apiKey: apiKey,
+              tenorApiKey: tenorApiKey,
+              giphyApiKey: giphyApiKey,
+                  clientKey: clientKey,
               randomID: randomID,
               tabColor: tabColor ?? Theme.of(context).colorScheme.secondary,
               textSelectedColor: textSelectedColor ??
@@ -91,7 +98,7 @@ class GiphyGet {
               textUnselectedColor: textUnselectedColor ??
                   Theme.of(context).textTheme.bodySmall?.color,
               searchText: searchText,
-              rating: rating,
+              giphyRating: giphyRating,
               lang: lang,
             ),
           )

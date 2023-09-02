@@ -9,6 +9,7 @@ typedef GiphyGetWrapperBuilder = Widget Function(
     Stream<GiphyGif>, GiphyGetWrapper);
 
 class GiphyGetWrapper extends StatelessWidget {
+  final String tenor_api_key;
   final String giphy_api_key;
   final GiphyGetWrapperBuilder builder;
   final StreamController<GiphyGif> streamController =
@@ -16,6 +17,7 @@ class GiphyGetWrapper extends StatelessWidget {
 
   GiphyGetWrapper({
     Key? key,
+    required this.tenor_api_key,
     required this.giphy_api_key,
     required this.builder,
   }) : super(key: key);
@@ -35,7 +37,8 @@ class GiphyGetWrapper extends StatelessWidget {
     GiphyGif? gif = await GiphyGet.getGif(
       queryText: queryText,
       context: context,
-      apiKey: giphy_api_key, //YOUR API KEY HERE
+      tenorApiKey: tenor_api_key, //TENOR API KEY HERE
+      giphyApiKey: giphy_api_key, //GIPHY API KEY HERE
       lang: GiphyLanguage.spanish,
       showGIFs: showGIFs,
       showStickers: showStickers,

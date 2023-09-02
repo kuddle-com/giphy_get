@@ -1,7 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:giphy_get/src/client/giphy_client.dart';
 import 'package:giphy_get/src/client/models/collection.dart';
 import 'package:giphy_get/src/client/models/gif.dart';
 import 'package:giphy_get/src/client/models/type.dart';
@@ -9,17 +8,20 @@ import 'package:giphy_get/src/providers/app_bar_provider.dart';
 import 'package:giphy_get/src/providers/tab_provider.dart';
 import 'package:provider/provider.dart';
 
-class GiphyTabDetail extends StatefulWidget {
+import '../../client/tenor_client.dart';
+
+class TenorTabDetail extends StatefulWidget {
   final String type;
   final ScrollController scrollController;
-  GiphyTabDetail({Key? key, required this.type, required this.scrollController})
+
+  TenorTabDetail({Key? key, required this.type, required this.scrollController})
       : super(key: key);
 
   @override
-  _GiphyTabDetailState createState() => _GiphyTabDetailState();
+  _TenorTabDetailState createState() => _TenorTabDetailState();
 }
 
-class _GiphyTabDetailState extends State<GiphyTabDetail> {
+class _TenorTabDetailState extends State<TenorTabDetail> {
   // Tab Provider
   late TabProvider _tabProvider;
 
@@ -27,10 +29,10 @@ class _GiphyTabDetailState extends State<GiphyTabDetail> {
   late AppBarProvider _appBarProvider;
 
   // Collection
-  GiphyCollection? _collection;
+  TenorCollection? _collection;
 
   // List of gifs
-  List<GiphyGif> _list = [];
+  List<TenorGif> _list = [];
 
   // Direction
   final Axis _scrollDirection = Axis.vertical;
@@ -50,9 +52,6 @@ class _GiphyTabDetailState extends State<GiphyTabDetail> {
   // is Loading gifs
   bool _isLoading = false;
 
-  // Offset
-  int offset = 0;
-
   @override
   void initState() {
     super.initState();
@@ -67,12 +66,6 @@ class _GiphyTabDetailState extends State<GiphyTabDetail> {
     switch (widget.type) {
       case GiphyType.gifs:
         _gifWidth = 200.0;
-        break;
-      case GiphyType.stickers:
-        _gifWidth = 150.0;
-        break;
-      case GiphyType.emoji:
-        _gifWidth = 80.0;
         break;
       default:
         break;
@@ -97,9 +90,7 @@ class _GiphyTabDetailState extends State<GiphyTabDetail> {
         ((MediaQuery.of(context).size.height - 30) / _gifWidth).round();
 
     _limit = _crossAxisCount * _mainAxisCount;
-    if (_limit > 100) _limit = 100;
-    // Initial offset
-    offset = 0;
+    if (_limit > 50) _limit = 50;
 
     // Load Initial Data
     _loadMore();
@@ -131,24 +122,24 @@ class _GiphyTabDetailState extends State<GiphyTabDetail> {
       mainAxisSpacing: _spacing,
       crossAxisSpacing: _spacing,
       itemBuilder: (ctx, idx) {
-        GiphyGif _gif = _list[idx];
+        TenorGif _gif = _list[idx];
         return _item(_gif);
       },
     );
   }
 
-  Widget _item(GiphyGif gif) {
-    double _aspectRatio = (double.parse(gif.images!.fixedWidth.width) /
-        double.parse(gif.images!.fixedWidth.height));
+  Widget _item(TenorGif gif) {
+    double _aspectRatio =
+        (gif.mediaFormats!.dims![0] / gif.mediaFormats!.dims![1]);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10.0),
       child: InkWell(
         onTap: () => _selectedGif(gif),
-        child: gif.images == null || gif.images?.fixedWidth.webp == null
+        child: gif.mediaFormats == null || gif.mediaFormats?.url == null
             ? Container()
             : ExtendedImage.network(
-                gif.images!.fixedWidth.webp!,
+                gif.mediaFormats!.url!,
                 semanticLabel: gif.title,
                 cache: true,
                 gaplessPlayback: true,
@@ -156,7 +147,7 @@ class _GiphyTabDetailState extends State<GiphyTabDetail> {
                 headers: {'accept': 'image/*'},
                 loadStateChanged: (state) => AnimatedSwitcher(
                   duration: const Duration(milliseconds: 350),
-                  child: gif.images == null
+                  child: gif.mediaFormats == null
                       ? Container()
                       : case2(
                           state.extendedImageLoadState,
@@ -195,52 +186,42 @@ class _GiphyTabDetailState extends State<GiphyTabDetail> {
   }
 
   Future<void> _loadMore() async {
-    print("Total of collections: ${_collection?.pagination?.totalCount}");
+    print("Total of collections: ${_collection?.results.length}");
     //Return if is loading or no more gifs
-    if (_isLoading || _collection?.pagination?.totalCount == _list.length) {
+    if (_isLoading) {
       print("No more object");
       return;
     }
 
     _isLoading = true;
 
-    // Giphy Client from library
-    GiphyClient client = GiphyClient(
-        apiKey: _tabProvider.giphyApiKey, randomId: _tabProvider.randomID);
-
-    // Offset pagination for query
-    if (_collection == null) {
-      offset = 0;
+    // Tenor Client from library
+    TenorClient client = TenorClient(apiKey: _tabProvider.tenorApiKey, clientKey: _tabProvider.clientKey);
+    // Get Gif
+    // If query text is not null search gif else trendings
+    if (_appBarProvider.queryText.isNotEmpty) {
+      _collection = await client.search(
+        _appBarProvider.queryText,
+        lang: _tabProvider.lang,
+        rating: _tabProvider.tenorRating,
+        type: widget.type,
+        limit: _limit,
+        next: _collection?.next,
+      );
     } else {
-      offset = _collection!.pagination!.offset + _collection!.pagination!.count;
-    }
-
-    // Get Gif or Emoji
-    if (widget.type == GiphyType.emoji) {
-      _collection = await client.emojis(offset: offset, limit: _limit);
-    } else {
-      // If query text is not null search gif else trendings
-      if (_appBarProvider.queryText.isNotEmpty) {
-        _collection = await client.search(_appBarProvider.queryText,
-            lang: _tabProvider.lang,
-            offset: offset,
-            rating: _tabProvider.giphyRating,
-            type: widget.type,
-            limit: _limit);
-      } else {
-        _collection = await client.trending(
-            lang: _tabProvider.lang,
-            offset: offset,
-            rating: _tabProvider.giphyRating,
-            type: widget.type,
-            limit: _limit);
-      }
+      _collection = await client.trending(
+        lang: _tabProvider.lang,
+        rating: _tabProvider.tenorRating,
+        type: widget.type,
+        limit: _limit,
+        next: _collection?.next,
+      );
     }
 
     // Set result to list
-    if (_collection!.data.isNotEmpty && mounted) {
+    if (_collection!.results.isNotEmpty && mounted) {
       setState(() {
-        _list.addAll(_collection!.data);
+        _list.addAll(_collection!.results);
       });
     }
 
@@ -256,8 +237,8 @@ class _GiphyTabDetailState extends State<GiphyTabDetail> {
   }
 
   // Return selected gif
-  void _selectedGif(GiphyGif gif) {
-    Navigator.pop(context, gif);
+  void _selectedGif(TenorGif gif) {
+    Navigator.pop(context, convertTenorGifToGiphyGif(gif));
   }
 
   // listener query

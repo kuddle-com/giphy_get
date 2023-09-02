@@ -3,12 +3,15 @@ import 'package:giphy_get/src/client/models/languages.dart';
 import 'package:giphy_get/src/client/models/rating.dart';
 
 class TabProvider with ChangeNotifier {
-  String apiKey;
+  String tenorApiKey;
+  String giphyApiKey;
+  String clientKey;
   Color? tabColor;
   Color? textSelectedColor;
   Color? textUnselectedColor;
   String? searchText;
-  String rating = GiphyRating.g;
+  String giphyRating = GiphyRating.g;
+  String tenorRating = TenorRating.high;
   String lang = GiphyLanguage.english;
   String randomID = "";
 
@@ -20,12 +23,14 @@ class TabProvider with ChangeNotifier {
   }
 
   TabProvider({
-    required this.apiKey,
+    required this.tenorApiKey,
+    required this.giphyApiKey,
+    required this.clientKey,
     this.tabColor,
     this.textSelectedColor,
     this.textUnselectedColor,
     this.searchText,
-    required this.rating,
+    required this.giphyRating,
     required this.randomID,
     required this.lang,
   });

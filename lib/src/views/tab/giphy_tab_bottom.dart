@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
 
-class GiphyTabBottom extends StatelessWidget {
+class GiphyTabBottom extends StatefulWidget {
+  final bool isGIF;
+
   const GiphyTabBottom({
     Key? key,
+    required this.isGIF,
   }) : super(key: key);
+
+  @override
+  State<GiphyTabBottom> createState() => _GiphyTabBottomState();
+}
+
+class _GiphyTabBottomState extends State<GiphyTabBottom> {
+
+  @override
+  void didUpdateWidget(covariant GiphyTabBottom oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +31,11 @@ class GiphyTabBottom extends StatelessWidget {
 
   Widget _giphyLogo(BuildContext context) {
     const basePath = "assets/img/";
-    String logoPath = Theme.of(context).brightness == Brightness.light
-        ? "poweredby_dark.png"
-        : "poweredby_light.png";
+    String logoPath = widget.isGIF
+        ? "PB_tenor.png"
+        : Theme.of(context).brightness == Brightness.light
+            ? "poweredby_dark.png"
+            : "poweredby_light.png";
 
     return Container(
       width: double.maxFinite,

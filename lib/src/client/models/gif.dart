@@ -1,5 +1,4 @@
-import 'package:giphy_get/src/client/models/images.dart';
-import 'package:giphy_get/src/client/models/user.dart';
+import '../../../giphy_get.dart';
 
 class GiphyGif {
   String? title;
@@ -143,4 +142,168 @@ class GiphyGif {
       trendingDatetime.hashCode ^
       user.hashCode ^
       images.hashCode;
+}
+
+class TenorGif {
+  String? id;
+  String? title;
+  MediaFormats? mediaFormats;
+  String? created;
+  String? contentDescription;
+  String? itemUrl;
+  String? url;
+  List<String> tags;
+  List<String> flags;
+  bool? hasAudio;
+
+  TenorGif({
+    required this.id,
+    required this.title,
+    required this.mediaFormats,
+    required this.created,
+    required this.contentDescription,
+    required this.itemUrl,
+    required this.url,
+    required this.tags,
+    required this.flags,
+    required this.hasAudio,
+  });
+
+  factory TenorGif.fromJson(Map<String, dynamic> json) {
+    final mediaFormatsData = json['media_formats']['tinygif'];
+    return TenorGif(
+      id: json['id'],
+      title: json['title'],
+      mediaFormats: MediaFormats.fromJson(mediaFormatsData),
+      created: json['created'].toString(),
+      contentDescription: json['content_description'],
+      itemUrl: json['itemurl'],
+      url: mediaFormatsData['url'],
+      tags: List<String>.from(json['tags']),
+      flags: List<String>.from(json['flags']),
+      hasAudio: json['hasaudio'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'media_formats': mediaFormats?.toJson(),
+      'created': created,
+      'content_description': contentDescription,
+      'itemurl': itemUrl,
+      'url': url,
+      'tags': tags,
+      'flags': flags,
+      'hasaudio': hasAudio,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'TenorGif{id: $id, title: $title, mediaFormats: $mediaFormats, created: $created, contentDescription: $contentDescription, itemUrl: $itemUrl, url: $url, tags: $tags, flags: $flags, hasAudio: $hasAudio}';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TenorGif &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          title == other.title &&
+          mediaFormats == other.mediaFormats &&
+          created == other.created &&
+          contentDescription == other.contentDescription &&
+          itemUrl == other.itemUrl &&
+          url == other.url &&
+          tags == other.tags &&
+          flags == other.flags &&
+          hasAudio == other.hasAudio;
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      title.hashCode ^
+      mediaFormats.hashCode ^
+      created.hashCode ^
+      contentDescription.hashCode ^
+      itemUrl.hashCode ^
+      url.hashCode ^
+      tags.hashCode ^
+      flags.hashCode ^
+      hasAudio.hashCode;
+}
+
+class MediaFormats {
+  String? url;
+  double? duration;
+  String? preview;
+  List<int>? dims;
+  int? size;
+
+  MediaFormats({
+    this.url,
+    this.duration,
+    this.preview,
+    this.dims,
+    this.size,
+  });
+
+  factory MediaFormats.fromJson(Map<String, dynamic> json) {
+    return MediaFormats(
+      url: json['url'],
+      duration: json['duration']?.toDouble(),
+      preview: json['preview'],
+      dims: List<int>.from(json['dims']),
+      size: json['size'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'url': url,
+      'duration': duration,
+      'preview': preview,
+      'dims': dims,
+      'size': size,
+    };
+  }
+}
+
+GiphyGif convertTenorGifToGiphyGif(TenorGif tenorGif) {
+  GiphyGif giphyGif = GiphyGif(
+    title: tenorGif.title,
+    type: "gif",
+    id: tenorGif.id,
+    slug: null,
+    url: tenorGif.itemUrl,
+    bitlyGifUrl: null,
+    bitlyUrl: null,
+    embedUrl: null,
+    username: null,
+    source: null,
+    rating: null,
+    contentUrl: null,
+    sourceTld: null,
+    sourcePostUrl: null,
+    isSticker: null,
+    importDatetime: null,
+    trendingDatetime: null,
+    user: null,
+    images: GiphyImages(
+      fixedWidth: GiphyFullImage(
+        url: tenorGif.mediaFormats?.url ?? '',
+        width: tenorGif.mediaFormats?.dims![0].toString() ?? '200',
+        height: tenorGif.mediaFormats?.dims![1].toString() ?? '200',
+        size: tenorGif.mediaFormats?.size.toString() ?? '',
+        mp4: null,
+        mp4Size: null,
+        webp: null,
+        webpSize: null,
+      ),
+    ),
+  );
+
+  return giphyGif;
 }

@@ -107,7 +107,7 @@ class _MainViewState extends State<MainView>
               showEmojis: widget.showEmojis,
             ),
           ),
-          widget.tabBottomBuilder?.call(context) ?? GiphyTabBottom(),
+          widget.tabBottomBuilder?.call(context) ?? GiphyTabBottom(isGIF: _tabController.index == 0),
         ],
       );
 }
