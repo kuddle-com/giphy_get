@@ -43,6 +43,7 @@ class GiphyGet {
     required String giphyApiKey,
     String tenorMediaFilter = TenorType.tinyGif,
     String clientKey = "",
+    String tenorRating = TenorRating.high,
     String giphyRating = GiphyRating.g,
     String lang = GiphyLanguage.english,
     String randomID = "",

@@ -12,8 +12,8 @@ class TabProvider with ChangeNotifier {
   Color? textSelectedColor;
   Color? textUnselectedColor;
   String? searchText;
-  String giphyRating = GiphyRating.g;
   String tenorRating = TenorRating.high;
+  String giphyRating = GiphyRating.g;
   String lang = GiphyLanguage.english;
   String randomID = "";
 
@@ -33,6 +33,7 @@ class TabProvider with ChangeNotifier {
     this.textSelectedColor,
     this.textUnselectedColor,
     this.searchText,
+    required this.tenorRating,
     required this.giphyRating,
     required this.randomID,
     required this.lang,
