@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:giphy_get/src/client/models/collection.dart';
 import 'package:giphy_get/src/client/models/gif.dart';
-import 'package:giphy_get/src/client/models/type.dart';
 import 'package:giphy_get/src/providers/app_bar_provider.dart';
 import 'package:giphy_get/src/providers/tab_provider.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +43,7 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
   double _spacing = 8.0;
 
   // Default gif with
-  late double _gifWidth;
+  double _gifWidth = 200.0;
 
   // Limit of query
   late int _limit;
@@ -61,15 +60,6 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
 
     // AppBar Provider
     _appBarProvider = Provider.of<AppBarProvider>(context, listen: false);
-
-    // Gif WIDTH
-    switch (widget.type) {
-      case GiphyType.gifs:
-        _gifWidth = 200.0;
-        break;
-      default:
-        break;
-    }
   }
 
   @override
@@ -204,7 +194,7 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
         _appBarProvider.queryText,
         lang: _tabProvider.lang,
         rating: _tabProvider.tenorRating,
-        type: widget.type,
+        type: _tabProvider.tenorMediaFilter,
         limit: _limit,
         next: _collection?.next,
       );
@@ -212,7 +202,7 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
       _collection = await client.trending(
         lang: _tabProvider.lang,
         rating: _tabProvider.tenorRating,
-        type: widget.type,
+        type: _tabProvider.tenorMediaFilter,
         limit: _limit,
         next: _collection?.next,
       );

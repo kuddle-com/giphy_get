@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:giphy_get/src/client/models/gif.dart';
-import 'package:giphy_get/src/client/models/languages.dart';
 import 'package:giphy_get/src/client/models/rating.dart';
 import 'package:giphy_get/src/client/models/type.dart';
 import 'package:http/http.dart';

@@ -1,11 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:giphy_get/src/client/models/languages.dart';
 import 'package:giphy_get/src/client/models/rating.dart';
+import 'package:giphy_get/src/client/models/type.dart';
 
 class TabProvider with ChangeNotifier {
   String tenorApiKey;
   String giphyApiKey;
   String clientKey;
+  String tenorMediaFilter = TenorType.tinyGif;
   Color? tabColor;
   Color? textSelectedColor;
   Color? textUnselectedColor;
@@ -26,6 +28,7 @@ class TabProvider with ChangeNotifier {
     required this.tenorApiKey,
     required this.giphyApiKey,
     required this.clientKey,
+    required this.tenorMediaFilter,
     this.tabColor,
     this.textSelectedColor,
     this.textUnselectedColor,

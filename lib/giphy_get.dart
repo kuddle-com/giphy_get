@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:giphy_get/src/client/models/gif.dart';
 import 'package:giphy_get/src/client/models/languages.dart';
 import 'package:giphy_get/src/client/models/rating.dart';
+import 'package:giphy_get/src/client/models/type.dart';
 import 'package:giphy_get/src/providers/app_bar_provider.dart';
 import 'package:giphy_get/src/providers/sheet_provider.dart';
 import 'package:giphy_get/src/providers/tab_provider.dart';
 import 'package:giphy_get/src/views/main_view.dart';
 import 'package:provider/provider.dart';
-
 // Giphy Client Export
 export 'package:giphy_get/src/client/giphy_client.dart';
 export 'package:giphy_get/src/client/models/collection.dart';
@@ -40,6 +40,7 @@ class GiphyGet {
     required BuildContext context,
     required String tenorApiKey,
     required String giphyApiKey,
+    String tenorMediaFilter = TenorType.tinyGif,
             String clientKey = "",
     String giphyRating = GiphyRating.g,
     String lang = GiphyLanguage.english,
@@ -91,6 +92,7 @@ class GiphyGet {
               tenorApiKey: tenorApiKey,
               giphyApiKey: giphyApiKey,
                   clientKey: clientKey,
+              tenorMediaFilter: tenorMediaFilter,
               randomID: randomID,
               tabColor: tabColor ?? Theme.of(context).colorScheme.secondary,
               textSelectedColor: textSelectedColor ??
