@@ -3,7 +3,7 @@ import 'package:giphy_get/giphy_get.dart';
 import 'package:giphy_get/src/providers/sheet_provider.dart';
 import 'package:giphy_get/src/views/appbar/searchappbar.dart';
 import 'package:giphy_get/src/views/tab/giphy_tab_bar.dart';
-import 'package:giphy_get/src/views/tab/giphy_tab_bottom.dart';
+import 'package:giphy_get/src/views/tab/tab_bottom.dart';
 import 'package:giphy_get/src/views/tab/giphy_tab_top.dart';
 import 'package:giphy_get/src/views/tab/giphy_tab_view.dart';
 import 'package:provider/provider.dart';

@@ -103,6 +103,7 @@ class GiphyGet {
                   Theme.of(context).textTheme.bodySmall?.color,
               searchText: searchText,
               giphyRating: giphyRating,
+              tenorRating: tenorRating,
               lang: lang,
             ),
           )

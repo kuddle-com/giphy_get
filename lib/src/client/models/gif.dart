@@ -1,4 +1,6 @@
-import '../../../giphy_get.dart';
+import 'package:giphy_get/src/client/models/images.dart';
+import 'package:giphy_get/src/client/models/user.dart';
+import 'package:giphy_get/src/client/models/image.dart';
 
 class GiphyGif {
   String? title;

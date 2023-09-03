@@ -19,7 +19,7 @@ class TenorClient {
       : _apiKey = apiKey,
         _clientKey = clientKey;
 
-  Future<TenorCollection> trending(
+  Future<TenorCollection> featured(
       {int limit = 30,
       String rating = TenorRating.high,
       String lang = 'en_IN',

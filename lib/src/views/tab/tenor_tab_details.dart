@@ -119,8 +119,13 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
   }
 
   Widget _item(TenorGif gif) {
-    double _aspectRatio =
-        (gif.mediaFormats!.dims![0] / gif.mediaFormats!.dims![1]);
+    double _aspectRatio;
+
+    if (gif.mediaFormats != null && gif.mediaFormats!.dims != null && gif.mediaFormats!.dims!.length >= 2) {
+      _aspectRatio = gif.mediaFormats!.dims![0] / gif.mediaFormats!.dims![1];
+    } else {
+      _aspectRatio = 1.0;
+    }
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10.0),
@@ -188,7 +193,7 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
     // Tenor Client from library
     TenorClient client = TenorClient(apiKey: _tabProvider.tenorApiKey, clientKey: _tabProvider.clientKey);
     // Get Gif
-    // If query text is not null search gif else trendings
+    // If query text is not null search gif else featured
     if (_appBarProvider.queryText.isNotEmpty) {
       _collection = await client.search(
         _appBarProvider.queryText,
@@ -199,7 +204,7 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
         next: _collection?.next,
       );
     } else {
-      _collection = await client.trending(
+      _collection = await client.featured(
         lang: _tabProvider.lang,
         rating: _tabProvider.tenorRating,
         type: _tabProvider.tenorMediaFilter,
