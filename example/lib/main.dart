@@ -70,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String randomId = "";
 
   String giphyApiKey = const String.fromEnvironment("GIPHY_API_KEY");
+  String tenorApiKey = const String.fromEnvironment("TENOR_API_KEY");
 
   @override
   void initState() {
@@ -88,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return GiphyGetWrapper(
         giphy_api_key: giphyApiKey,
+        tenor_api_key: tenorApiKey,
         builder: (stream, giphyGetWrapper) {
           stream.listen((gif) {
             setState(() {
