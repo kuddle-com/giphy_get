@@ -200,7 +200,7 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
         lang: _tabProvider.tenorLang,
         country: 'IN',
         rating: _tabProvider.tenorRating,
-        type: _tabProvider.tenorMediaFilter,
+        mediaFormat: _tabProvider.tenorMediaFilter,
         limit: _limit,
         next: _collection?.next,
       );
@@ -209,7 +209,7 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
         lang: _tabProvider.tenorLang,
         country: 'IN',
         rating: _tabProvider.tenorRating,
-        type: _tabProvider.tenorMediaFilter,
+        mediaFormat: _tabProvider.tenorMediaFilter,
         limit: _limit,
         next: _collection?.next,
       );

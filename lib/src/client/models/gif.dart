@@ -171,8 +171,8 @@ class TenorGif {
     required this.hasAudio,
   });
 
-  factory TenorGif.fromJson(Map<String, dynamic> json) {
-    final mediaFormatsData = json['media_formats']['tinygif'];
+  factory TenorGif.fromJson(Map<String, dynamic> json, String mediaFormat) {
+    final mediaFormatsData = json['media_formats'][mediaFormat];
     return TenorGif(
       id: json['id'],
       title: json['title'],

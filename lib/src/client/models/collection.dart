@@ -58,10 +58,11 @@ class TenorCollection {
     this.next,
   });
 
-  factory TenorCollection.fromJson(Map<String, dynamic> json) {
+  factory TenorCollection.fromJson(
+      Map<String, dynamic> json, String mediaFormat) {
     final resultsList = json['results'] as List<dynamic>;
     final List<TenorGif> gifList = resultsList.map((result) {
-      return TenorGif.fromJson(result as Map<String, dynamic>);
+      return TenorGif.fromJson(result as Map<String, dynamic>, mediaFormat);
     }).toList();
 
     return TenorCollection(
