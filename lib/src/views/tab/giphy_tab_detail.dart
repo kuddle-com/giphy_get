@@ -222,14 +222,14 @@ class _GiphyTabDetailState extends State<GiphyTabDetail> {
       // If query text is not null search gif else trendings
       if (_appBarProvider.queryText.isNotEmpty) {
         _collection = await client.search(_appBarProvider.queryText,
-            lang: _tabProvider.lang,
+            lang: _tabProvider.giphyLang,
             offset: offset,
             rating: _tabProvider.giphyRating,
             type: widget.type,
             limit: _limit);
       } else {
         _collection = await client.trending(
-            lang: _tabProvider.lang,
+            lang: _tabProvider.giphyLang,
             offset: offset,
             rating: _tabProvider.giphyRating,
             type: widget.type,

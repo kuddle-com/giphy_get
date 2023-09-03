@@ -197,7 +197,8 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
     if (_appBarProvider.queryText.isNotEmpty) {
       _collection = await client.search(
         _appBarProvider.queryText,
-        lang: _tabProvider.lang,
+        lang: _tabProvider.tenorLang,
+        country: 'IN',
         rating: _tabProvider.tenorRating,
         type: _tabProvider.tenorMediaFilter,
         limit: _limit,
@@ -205,7 +206,8 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
       );
     } else {
       _collection = await client.featured(
-        lang: _tabProvider.lang,
+        lang: _tabProvider.tenorLang,
+        country: 'IN',
         rating: _tabProvider.tenorRating,
         type: _tabProvider.tenorMediaFilter,
         limit: _limit,

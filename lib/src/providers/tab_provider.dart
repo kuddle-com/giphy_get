@@ -13,8 +13,10 @@ class TabProvider with ChangeNotifier {
   Color? textUnselectedColor;
   String? searchText;
   String tenorRating = TenorRating.high;
+  String tenorLang = 'en_IN';
   String giphyRating = GiphyRating.g;
-  String lang = GiphyLanguage.english;
+  String giphyLang = GiphyLanguage.english;
+  String country = 'IN';
   String randomID = "";
 
   String? _tabType;
@@ -34,9 +36,11 @@ class TabProvider with ChangeNotifier {
     this.textUnselectedColor,
     this.searchText,
     required this.tenorRating,
+    required this.tenorLang,
     required this.giphyRating,
+    required this.giphyLang,
+    required this.country,
     required this.randomID,
-    required this.lang,
   });
 
   void setTabColor(Color tabColor) {
