@@ -144,7 +144,7 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
                   duration: const Duration(milliseconds: 350),
                   child: gif.mediaFormats == null
                       ? Container()
-                      : case2(
+                      : _mediaViewState(
                           state.extendedImageLoadState,
                           {
                             LoadState.loading: AspectRatio(
@@ -250,7 +250,7 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
     _loadMore();
   }
 
-  TValue? case2<TOptionType, TValue>(
+  TValue? _mediaViewState<TOptionType, TValue>(
     TOptionType selectedOption,
     Map<TOptionType, TValue> branches, [
     TValue? defaultValue = null,

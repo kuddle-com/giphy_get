@@ -158,7 +158,7 @@ class _GiphyTabDetailState extends State<GiphyTabDetail> {
                   duration: const Duration(milliseconds: 350),
                   child: gif.images == null
                       ? Container()
-                      : case2(
+                      : _mediaViewState(
                           state.extendedImageLoadState,
                           {
                             LoadState.loading: AspectRatio(
@@ -272,7 +272,7 @@ class _GiphyTabDetailState extends State<GiphyTabDetail> {
     _loadMore();
   }
 
-  TValue? case2<TOptionType, TValue>(
+  TValue? _mediaViewState<TOptionType, TValue>(
     TOptionType selectedOption,
     Map<TOptionType, TValue> branches, [
     TValue? defaultValue = null,
