@@ -77,11 +77,6 @@ class TenorCollection {
       'next': next,
     };
   }
-
-  @override
-  String toString() {
-    return 'TenorCollection{results: $results, next: $next}';
-  }
 }
 
 class GiphyPagination {

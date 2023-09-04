@@ -262,8 +262,8 @@ GiphyGif convertTenorGifToGiphyGif(TenorGif tenorGif) {
     images: GiphyImages(
       fixedWidth: GiphyFullImage(
         url: tenorGif.mediaFormats?.url ?? '',
-        width: tenorGif.mediaFormats?.dims![0].toString() ?? '200',
-        height: tenorGif.mediaFormats?.dims![1].toString() ?? '200',
+        width: tenorGif.mediaFormats?.dims?[0].toString() ?? '200',
+        height: tenorGif.mediaFormats?.dims?[1].toString() ?? '200',
         size: tenorGif.mediaFormats?.size.toString() ?? '',
         mp4: null,
         mp4Size: null,

@@ -158,7 +158,7 @@ class _GiphyTabDetailState extends State<GiphyTabDetail> {
                   duration: const Duration(milliseconds: 350),
                   child: gif.images == null
                       ? Container()
-                      : _mediaViewState(
+                      : case2(
                           state.extendedImageLoadState,
                           {
                             LoadState.loading: AspectRatio(
@@ -206,7 +206,7 @@ class _GiphyTabDetailState extends State<GiphyTabDetail> {
 
     // Giphy Client from library
     GiphyClient client = GiphyClient(
-        apiKey: _tabProvider.giphyApiKey, randomId: _tabProvider.randomID);
+        apiKey: _tabProvider.apiKey, randomId: _tabProvider.randomID);
 
     // Offset pagination for query
     if (_collection == null) {
@@ -222,16 +222,16 @@ class _GiphyTabDetailState extends State<GiphyTabDetail> {
       // If query text is not null search gif else trendings
       if (_appBarProvider.queryText.isNotEmpty) {
         _collection = await client.search(_appBarProvider.queryText,
-            lang: _tabProvider.giphyLang,
+            lang: _tabProvider.lang,
             offset: offset,
-            rating: _tabProvider.giphyRating,
+            rating: _tabProvider.rating,
             type: widget.type,
             limit: _limit);
       } else {
         _collection = await client.trending(
-            lang: _tabProvider.giphyLang,
+            lang: _tabProvider.lang,
             offset: offset,
-            rating: _tabProvider.giphyRating,
+            rating: _tabProvider.rating,
             type: widget.type,
             limit: _limit);
       }
@@ -272,7 +272,7 @@ class _GiphyTabDetailState extends State<GiphyTabDetail> {
     _loadMore();
   }
 
-  TValue? _mediaViewState<TOptionType, TValue>(
+  TValue? case2<TOptionType, TValue>(
     TOptionType selectedOption,
     Map<TOptionType, TValue> branches, [
     TValue? defaultValue = null,

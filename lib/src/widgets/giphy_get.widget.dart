@@ -37,8 +37,8 @@ class GiphyGetWrapper extends StatelessWidget {
     GiphyGif? gif = await GiphyGet.getGif(
       queryText: queryText,
       context: context,
+      apiKey: giphy_api_key, //GIPHY API KEY HERE
       tenorApiKey: tenor_api_key, //TENOR API KEY HERE
-      giphyApiKey: giphy_api_key, //GIPHY API KEY HERE
       showGIFs: showGIFs,
       showStickers: showStickers,
       showEmojis: showEmojis,

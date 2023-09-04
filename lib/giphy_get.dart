@@ -39,14 +39,14 @@ class GiphyGet {
   // Show Bottom Sheet
   static Future<GiphyGif?> getGif({
     required BuildContext context,
+    required String apiKey,
+    String rating = GiphyRating.g,
+    String lang = GiphyLanguage.english,
     required String tenorApiKey,
-    required String giphyApiKey,
     String tenorMediaFilter = TenorType.gif,
     String clientKey = "",
     String tenorRating = TenorRating.high,
     String tenorLang = 'en_IN',
-    String giphyRating = GiphyRating.g,
-    String giphyLang = GiphyLanguage.english,
     String country = 'IN',
     String randomID = "",
     String searchText = "",
@@ -63,11 +63,11 @@ class GiphyGet {
     TabBottomBuilder? tabBottomBuilder,
     SearchAppBarBuilder? searchAppBarBuilder,
   }) {
+    if (apiKey == "") {
+      throw Exception("apiKey must be not null or not empty");
+    }
     if (tenorApiKey == "") {
       throw Exception("tenorApiKey must be not null or not empty");
-    }
-    if (giphyApiKey == "") {
-      throw Exception("giphyApiKey must be not null or not empty");
     }
 
     return showModalBottomSheet<GiphyGif>(
@@ -93,8 +93,8 @@ class GiphyGet {
           ),
           ChangeNotifierProvider(
             create: (ctx) => TabProvider(
+              apiKey: apiKey,
               tenorApiKey: tenorApiKey,
-              giphyApiKey: giphyApiKey,
               clientKey: clientKey,
               tenorMediaFilter: tenorMediaFilter,
               randomID: randomID,
@@ -104,10 +104,10 @@ class GiphyGet {
               textUnselectedColor: textUnselectedColor ??
                   Theme.of(context).textTheme.bodySmall?.color,
               searchText: searchText,
+              rating: rating,
+              lang: lang,
               tenorRating: tenorRating,
               tenorLang: tenorLang,
-              giphyRating: giphyRating,
-              giphyLang: giphyLang,
               country: country,
             ),
           )
