@@ -5,6 +5,8 @@ import 'package:giphy_get/src/client/models/collection.dart';
 import 'package:giphy_get/src/client/models/gif.dart';
 import 'package:giphy_get/src/providers/app_bar_provider.dart';
 import 'package:giphy_get/src/providers/tab_provider.dart';
+import 'package:giphy_get/src/client/models/image.dart';
+import 'package:giphy_get/src/client/models/images.dart';
 import 'package:provider/provider.dart';
 
 import '../../client/tenor_client.dart';
@@ -227,7 +229,7 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
 
   // Return selected gif
   void _selectedGif(TenorGif gif) {
-    Navigator.pop(context, convertTenorGifToGiphyGif(gif));
+    Navigator.pop(context, _convertTenorGifToGiphyGif(gif));
   }
 
   // listener query
@@ -252,5 +254,40 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
     }
 
     return branches[selectedOption];
+  }
+
+  GiphyGif _convertTenorGifToGiphyGif(TenorGif tenorGif) {
+    return GiphyGif(
+      title: tenorGif.title,
+      type: "gif",
+      id: tenorGif.id,
+      slug: null,
+      url: tenorGif.itemUrl,
+      bitlyGifUrl: null,
+      bitlyUrl: null,
+      embedUrl: null,
+      username: null,
+      source: null,
+      rating: null,
+      contentUrl: null,
+      sourceTld: null,
+      sourcePostUrl: null,
+      isSticker: null,
+      importDatetime: null,
+      trendingDatetime: null,
+      user: null,
+      images: GiphyImages(
+        fixedWidth: GiphyFullImage(
+          url: tenorGif.mediaFormats?.url ?? '',
+          width: tenorGif.mediaFormats?.dims?[0].toString() ?? '200',
+          height: tenorGif.mediaFormats?.dims?[1].toString() ?? '200',
+          size: tenorGif.mediaFormats?.size.toString() ?? '',
+          mp4: null,
+          mp4Size: null,
+          webp: null,
+          webpSize: null,
+        ),
+      ),
+    );
   }
 }

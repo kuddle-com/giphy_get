@@ -238,38 +238,3 @@ class MediaFormats {
     };
   }
 }
-
-GiphyGif convertTenorGifToGiphyGif(TenorGif tenorGif) {
-  return GiphyGif(
-    title: tenorGif.title,
-    type: "gif",
-    id: tenorGif.id,
-    slug: null,
-    url: tenorGif.itemUrl,
-    bitlyGifUrl: null,
-    bitlyUrl: null,
-    embedUrl: null,
-    username: null,
-    source: null,
-    rating: null,
-    contentUrl: null,
-    sourceTld: null,
-    sourcePostUrl: null,
-    isSticker: null,
-    importDatetime: null,
-    trendingDatetime: null,
-    user: null,
-    images: GiphyImages(
-      fixedWidth: GiphyFullImage(
-        url: tenorGif.mediaFormats?.url ?? '',
-        width: tenorGif.mediaFormats?.dims?[0].toString() ?? '200',
-        height: tenorGif.mediaFormats?.dims?[1].toString() ?? '200',
-        size: tenorGif.mediaFormats?.size.toString() ?? '',
-        mp4: null,
-        mp4Size: null,
-        webp: null,
-        webpSize: null,
-      ),
-    ),
-  );
-}
