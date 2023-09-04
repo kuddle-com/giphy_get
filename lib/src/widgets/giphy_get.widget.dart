@@ -38,6 +38,7 @@ class GiphyGetWrapper extends StatelessWidget {
       queryText: queryText,
       context: context,
       apiKey: giphy_api_key, //GIPHY API KEY HERE
+      lang: GiphyLanguage.spanish,
       tenorApiKey: tenor_api_key, //TENOR API KEY HERE
       showGIFs: showGIFs,
       showStickers: showStickers,
