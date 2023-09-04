@@ -41,7 +41,7 @@ class GiphyGet {
     required BuildContext context,
     required String tenorApiKey,
     required String giphyApiKey,
-    String tenorMediaFilter = TenorType.tinyGif,
+    String tenorMediaFilter = TenorType.gif,
     String clientKey = "",
     String tenorRating = TenorRating.high,
     String tenorLang = 'en_IN',

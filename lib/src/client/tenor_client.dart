@@ -24,7 +24,7 @@ class TenorClient {
       String rating = TenorRating.high,
       String lang = 'en_IN',
       String country = 'IN',
-      String mediaFormat = TenorType.tinyGif,
+      String mediaFormat = TenorType.gif,
       String? next}) async {
     return _fetchCollection(
       baseUri.replace(
@@ -47,7 +47,7 @@ class TenorClient {
       String rating = TenorRating.high,
       String lang = 'en_IN',
       String country = 'IN',
-      String mediaFormat = TenorType.tinyGif,
+      String mediaFormat = TenorType.gif,
       String? next}) async {
     return _fetchCollection(
       baseUri.replace(

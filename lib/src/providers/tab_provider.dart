@@ -7,7 +7,7 @@ class TabProvider with ChangeNotifier {
   String tenorApiKey;
   String giphyApiKey;
   String clientKey;
-  String tenorMediaFilter = TenorType.tinyGif;
+  String tenorMediaFilter = TenorType.gif;
   Color? tabColor;
   Color? textSelectedColor;
   Color? textUnselectedColor;
