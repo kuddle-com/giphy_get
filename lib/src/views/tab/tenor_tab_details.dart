@@ -117,7 +117,9 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
   Widget _item(TenorGif gif) {
     double _aspectRatio;
 
-    if (gif.mediaFormats != null && gif.mediaFormats!.dims != null && gif.mediaFormats!.dims!.length >= 2) {
+    if (gif.mediaFormats != null &&
+        gif.mediaFormats!.dims != null &&
+        gif.mediaFormats!.dims!.length >= 2) {
       _aspectRatio = gif.mediaFormats!.dims![0] / gif.mediaFormats!.dims![1];
     } else {
       _aspectRatio = 1.0;
@@ -127,8 +129,8 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
       borderRadius: BorderRadius.circular(10.0),
       child: InkWell(
         onTap: () => _selectedGif(gif),
-        child: gif.mediaFormats == null || gif.mediaFormats?.url == null
-            ? Container()
+        child: gif.mediaFormats == null || gif.mediaFormats!.url == null
+            ? SizedBox()
             : ExtendedImage.network(
                 gif.mediaFormats!.url!,
                 semanticLabel: gif.title,
@@ -138,38 +140,36 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
                 headers: {'accept': 'image/*'},
                 loadStateChanged: (state) => AnimatedSwitcher(
                   duration: const Duration(milliseconds: 350),
-                  child: gif.mediaFormats == null
-                      ? Container()
-                      : case2(
-                          state.extendedImageLoadState,
-                          {
-                            LoadState.loading: AspectRatio(
-                              aspectRatio: _aspectRatio,
-                              child: Container(
-                                color: Theme.of(context).cardColor,
-                              ),
-                            ),
-                            LoadState.completed: AspectRatio(
-                              aspectRatio: _aspectRatio,
-                              child: ExtendedRawImage(
-                                fit: BoxFit.fill,
-                                image: state.extendedImageInfo?.image,
-                              ),
-                            ),
-                            LoadState.failed: AspectRatio(
-                              aspectRatio: _aspectRatio,
-                              child: Container(
-                                color: Theme.of(context).cardColor,
-                              ),
-                            ),
-                          },
-                          AspectRatio(
-                            aspectRatio: _aspectRatio,
-                            child: Container(
-                              color: Theme.of(context).cardColor,
-                            ),
-                          ),
+                  child: case2(
+                    state.extendedImageLoadState,
+                    {
+                      LoadState.loading: AspectRatio(
+                        aspectRatio: _aspectRatio,
+                        child: Container(
+                          color: Theme.of(context).cardColor,
                         ),
+                      ),
+                      LoadState.completed: AspectRatio(
+                        aspectRatio: _aspectRatio,
+                        child: ExtendedRawImage(
+                          fit: BoxFit.fill,
+                          image: state.extendedImageInfo?.image,
+                        ),
+                      ),
+                      LoadState.failed: AspectRatio(
+                        aspectRatio: _aspectRatio,
+                        child: Container(
+                          color: Theme.of(context).cardColor,
+                        ),
+                      ),
+                    },
+                    AspectRatio(
+                      aspectRatio: _aspectRatio,
+                      child: Container(
+                        color: Theme.of(context).cardColor,
+                      ),
+                    ),
+                  ),
                 ),
               ),
       ),
@@ -187,7 +187,8 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
     _isLoading = true;
 
     // Tenor Client from library
-    TenorClient client = TenorClient(apiKey: _tabProvider.tenorApiKey, clientKey: _tabProvider.clientKey);
+    TenorClient client = TenorClient(
+        apiKey: _tabProvider.tenorApiKey, clientKey: _tabProvider.clientKey);
     // Get Gif
     // If query text is not null search gif else featured
     if (_appBarProvider.queryText.isNotEmpty) {
@@ -262,7 +263,7 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
       type: "gif",
       id: tenorGif.id,
       slug: null,
-      url: tenorGif.itemUrl,
+      url: null,
       bitlyGifUrl: null,
       bitlyUrl: null,
       embedUrl: null,

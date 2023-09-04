@@ -92,7 +92,7 @@ class TenorClientError {
   final int statusCode;
   final String exception;
 
-  TenorClientError(this.statusCode, this.exception);
+  const TenorClientError(this.statusCode, this.exception);
 
   @override
   String toString() {

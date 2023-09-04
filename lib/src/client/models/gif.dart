@@ -147,43 +147,22 @@ class GiphyGif {
 }
 
 class TenorGif {
-  String? id;
-  String? title;
-  MediaFormats? mediaFormats;
-  String? created;
-  String? contentDescription;
-  String? itemUrl;
-  String? url;
-  List<String> tags;
-  List<String> flags;
-  bool? hasAudio;
+  final String? id;
+  final String? title;
+  final MediaFormats? mediaFormats;
 
-  TenorGif({
-    required this.id,
-    required this.title,
-    required this.mediaFormats,
-    required this.created,
-    required this.contentDescription,
-    required this.itemUrl,
-    required this.url,
-    required this.tags,
-    required this.flags,
-    required this.hasAudio,
-  });
+  const TenorGif(
+    this.id,
+    this.title,
+    this.mediaFormats,
+  );
 
   factory TenorGif.fromJson(Map<String, dynamic> json, String mediaFormat) {
     final mediaFormatsData = json['media_formats'][mediaFormat];
     return TenorGif(
-      id: json['id'],
-      title: json['title'],
-      mediaFormats: MediaFormats.fromJson(mediaFormatsData),
-      created: json['created'].toString(),
-      contentDescription: json['content_description'],
-      itemUrl: json['itemurl'],
-      url: mediaFormatsData['url'],
-      tags: List<String>.from(json['tags']),
-      flags: List<String>.from(json['flags']),
-      hasAudio: json['hasaudio'],
+      json['id'],
+      json['title'],
+      MediaFormats.fromJson(mediaFormatsData),
     );
   }
 
@@ -192,47 +171,32 @@ class TenorGif {
       'id': id,
       'title': title,
       'media_formats': mediaFormats?.toJson(),
-      'created': created,
-      'content_description': contentDescription,
-      'itemurl': itemUrl,
-      'url': url,
-      'tags': tags,
-      'flags': flags,
-      'hasaudio': hasAudio,
     };
   }
 }
 
 class MediaFormats {
-  String? url;
-  double? duration;
-  String? preview;
-  List<int>? dims;
-  int? size;
+  final String? url;
+  final List<int>? dims;
+  final int? size;
 
-  MediaFormats({
+  const MediaFormats(
     this.url,
-    this.duration,
-    this.preview,
     this.dims,
     this.size,
-  });
+  );
 
   factory MediaFormats.fromJson(Map<String, dynamic> json) {
     return MediaFormats(
-      url: json['url'],
-      duration: json['duration']?.toDouble(),
-      preview: json['preview'],
-      dims: List<int>.from(json['dims']),
-      size: json['size'],
+      json['url'],
+      List<int>.from(json['dims']),
+      json['size'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'url': url,
-      'duration': duration,
-      'preview': preview,
       'dims': dims,
       'size': size,
     };
