@@ -201,11 +201,6 @@ class TenorGif {
       'hasaudio': hasAudio,
     };
   }
-
-  @override
-  String toString() {
-    return 'TenorGif{id: $id, title: $title, mediaFormats: $mediaFormats, created: $created, contentDescription: $contentDescription, itemUrl: $itemUrl, url: $url, tags: $tags, flags: $flags, hasAudio: $hasAudio}';
-  }
 }
 
 class MediaFormats {
