@@ -13,7 +13,7 @@ import 'package:giphy_get/src/views/main_view.dart';
 import 'package:provider/provider.dart';
 
 // Giphy Client Export
-export 'package:giphy_get/src/client/giphy_client.dart';
+export 'package:giphy_get/src/client/client.dart';
 export 'package:giphy_get/src/client/models/collection.dart';
 export 'package:giphy_get/src/client/models/gif.dart';
 export 'package:giphy_get/src/client/models/image.dart';

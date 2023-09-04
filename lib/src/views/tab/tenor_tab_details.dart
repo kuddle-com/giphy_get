@@ -45,9 +45,6 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
   // Default gif with
   double _gifWidth = 200.0;
 
-  // Limit of query
-  late int _limit;
-
   // is Loading gifs
   bool _isLoading = false;
 
@@ -78,9 +75,6 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
     // Set vertical max items count
     int _mainAxisCount =
         ((MediaQuery.of(context).size.height - 30) / _gifWidth).round();
-
-    _limit = _crossAxisCount * _mainAxisCount;
-    if (_limit > 50) _limit = 50;
 
     // Load Initial Data
     _loadMore();
@@ -201,7 +195,6 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
         country: 'IN',
         rating: _tabProvider.tenorRating,
         mediaFormat: _tabProvider.tenorMediaFilter,
-        limit: _limit,
         next: _collection?.next,
       );
     } else {
@@ -210,7 +203,6 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
         country: 'IN',
         rating: _tabProvider.tenorRating,
         mediaFormat: _tabProvider.tenorMediaFilter,
-        limit: _limit,
         next: _collection?.next,
       );
     }

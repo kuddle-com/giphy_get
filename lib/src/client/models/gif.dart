@@ -240,7 +240,7 @@ class MediaFormats {
 }
 
 GiphyGif convertTenorGifToGiphyGif(TenorGif tenorGif) {
-  GiphyGif giphyGif = GiphyGif(
+  return GiphyGif(
     title: tenorGif.title,
     type: "gif",
     id: tenorGif.id,
@@ -272,6 +272,4 @@ GiphyGif convertTenorGifToGiphyGif(TenorGif tenorGif) {
       ),
     ),
   );
-
-  return giphyGif;
 }

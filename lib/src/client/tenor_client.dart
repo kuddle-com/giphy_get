@@ -20,7 +20,7 @@ class TenorClient {
         _clientKey = clientKey;
 
   Future<TenorCollection> featured(
-      {int limit = 30,
+      {int limit = 10,
       String rating = TenorRating.high,
       String lang = 'en_IN',
       String country = 'IN',
@@ -43,7 +43,7 @@ class TenorClient {
   }
 
   Future<TenorCollection> search(String query,
-      {int limit = 30,
+      {int limit = 10,
       String rating = TenorRating.high,
       String lang = 'en_IN',
       String country = 'IN',
