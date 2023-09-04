@@ -206,35 +206,6 @@ class TenorGif {
   String toString() {
     return 'TenorGif{id: $id, title: $title, mediaFormats: $mediaFormats, created: $created, contentDescription: $contentDescription, itemUrl: $itemUrl, url: $url, tags: $tags, flags: $flags, hasAudio: $hasAudio}';
   }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TenorGif &&
-          runtimeType == other.runtimeType &&
-          id == other.id &&
-          title == other.title &&
-          mediaFormats == other.mediaFormats &&
-          created == other.created &&
-          contentDescription == other.contentDescription &&
-          itemUrl == other.itemUrl &&
-          url == other.url &&
-          tags == other.tags &&
-          flags == other.flags &&
-          hasAudio == other.hasAudio;
-
-  @override
-  int get hashCode =>
-      id.hashCode ^
-      title.hashCode ^
-      mediaFormats.hashCode ^
-      created.hashCode ^
-      contentDescription.hashCode ^
-      itemUrl.hashCode ^
-      url.hashCode ^
-      tags.hashCode ^
-      flags.hashCode ^
-      hasAudio.hashCode;
 }
 
 class MediaFormats {
