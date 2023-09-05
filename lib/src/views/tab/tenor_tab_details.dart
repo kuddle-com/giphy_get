@@ -113,6 +113,7 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
       itemBuilder: (ctx, idx) {
         TenorGif _gif = _list[idx];
         return _TenorGridItem(
+          key: ValueKey(_gif.id!),
           gif: _gif,
           selectedGif: _selectedGif,
         );
@@ -251,7 +252,6 @@ class _TenorGridItem extends StatelessWidget {
         ? gif.mediaFormats!.dims![0] / gif.mediaFormats!.dims![1]
         : 1.0;
     return ClipRRect(
-      key: Key(gif.id!),
       borderRadius: BorderRadius.circular(10.0),
       child: InkWell(
         onTap: () => selectedGif(gif),
