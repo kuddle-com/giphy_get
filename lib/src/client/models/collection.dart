@@ -70,13 +70,6 @@ class TenorCollection {
       next: json['next'],
     );
   }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'results': results.map((result) => result.toJson()).toList(),
-      'next': next,
-    };
-  }
 }
 
 class GiphyPagination {

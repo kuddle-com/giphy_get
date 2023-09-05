@@ -164,14 +164,6 @@ class TenorGif {
       MediaFormats.fromJson(json['media_formats'][mediaFormat]),
     );
   }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'media_formats': mediaFormats?.toJson(),
-    };
-  }
 }
 
 class MediaFormats {
@@ -191,13 +183,5 @@ class MediaFormats {
       List<int>.from(json['dims']),
       json['size'],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'url': url,
-      'dims': dims,
-      'size': size,
-    };
   }
 }
