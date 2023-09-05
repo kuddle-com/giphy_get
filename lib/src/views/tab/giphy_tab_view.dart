@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:giphy_get/src/client/models/type.dart';
+import 'package:giphy_get/src/views/tab/tenor_tab_details.dart';
 
 import 'giphy_tab_detail.dart';
 
@@ -26,7 +27,7 @@ class GiphyTabView extends StatelessWidget {
       controller: tabController,
       children: [
         if (showGIFs)
-          GiphyTabDetail(
+          TenorTabDetail(
             type: GiphyType.gifs,
             scrollController: scrollController,
             key: null,

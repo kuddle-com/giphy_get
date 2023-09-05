@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:giphy_get/src/client/models/gif.dart';
 import 'package:giphy_get/src/client/models/languages.dart';
 import 'package:giphy_get/src/client/models/rating.dart';
+import 'package:giphy_get/src/client/models/type.dart';
 import 'package:giphy_get/src/providers/app_bar_provider.dart';
 import 'package:giphy_get/src/providers/sheet_provider.dart';
 import 'package:giphy_get/src/providers/tab_provider.dart';
@@ -41,6 +42,12 @@ class GiphyGet {
     required String apiKey,
     String rating = GiphyRating.g,
     String lang = GiphyLanguage.english,
+    required String tenorApiKey,
+    String tenorMediaFilter = TenorType.gif,
+    String clientKey = "",
+    String tenorRating = TenorRating.high,
+    String tenorLang = 'en_IN',
+    String country = 'IN',
     String randomID = "",
     String searchText = "",
     String queryText = "",
@@ -58,6 +65,9 @@ class GiphyGet {
   }) {
     if (apiKey == "") {
       throw Exception("apiKey must be not null or not empty");
+    }
+    if (tenorApiKey == "") {
+      throw Exception("tenorApiKey must be not null or not empty");
     }
 
     return showModalBottomSheet<GiphyGif>(
@@ -84,6 +94,9 @@ class GiphyGet {
           ChangeNotifierProvider(
             create: (ctx) => TabProvider(
               apiKey: apiKey,
+              tenorApiKey: tenorApiKey,
+              clientKey: clientKey,
+              tenorMediaFilter: tenorMediaFilter,
               randomID: randomID,
               tabColor: tabColor ?? Theme.of(context).colorScheme.secondary,
               textSelectedColor: textSelectedColor ??
@@ -93,6 +106,9 @@ class GiphyGet {
               searchText: searchText,
               rating: rating,
               lang: lang,
+              tenorRating: tenorRating,
+              tenorLang: tenorLang,
+              country: country,
             ),
           )
         ],

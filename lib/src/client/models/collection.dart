@@ -49,6 +49,29 @@ class GiphyCollection {
   int get hashCode => data.hashCode ^ pagination.hashCode ^ meta.hashCode;
 }
 
+class TenorCollection {
+  final List<TenorGif> results;
+  final String? next;
+
+  const TenorCollection(
+    this.results,
+    this.next,
+  );
+
+  factory TenorCollection.fromJson(
+      Map<String, dynamic> json, String mediaFormat) {
+    final resultsList = json['results'] as List<dynamic>;
+    final List<TenorGif> gifList = resultsList.map((result) {
+      return TenorGif.fromJson(result as Map<String, dynamic>, mediaFormat);
+    }).toList();
+
+    return TenorCollection(
+      gifList,
+      json['next'],
+    );
+  }
+}
+
 class GiphyPagination {
   final int totalCount;
   final int count;

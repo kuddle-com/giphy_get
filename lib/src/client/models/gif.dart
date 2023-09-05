@@ -1,5 +1,6 @@
 import 'package:giphy_get/src/client/models/images.dart';
 import 'package:giphy_get/src/client/models/user.dart';
+import 'package:giphy_get/src/client/models/image.dart';
 
 class GiphyGif {
   String? title;
@@ -143,4 +144,44 @@ class GiphyGif {
       trendingDatetime.hashCode ^
       user.hashCode ^
       images.hashCode;
+}
+
+class TenorGif {
+  final String? id;
+  final String? title;
+  final MediaFormats? mediaFormats;
+
+  const TenorGif(
+    this.id,
+    this.title,
+    this.mediaFormats,
+  );
+
+  factory TenorGif.fromJson(Map<String, dynamic> json, String mediaFormat) {
+    return TenorGif(
+      json['id'],
+      json['title'],
+      MediaFormats.fromJson(json['media_formats'][mediaFormat]),
+    );
+  }
+}
+
+class MediaFormats {
+  final String? url;
+  final List<int>? dims;
+  final int? size;
+
+  const MediaFormats(
+    this.url,
+    this.dims,
+    this.size,
+  );
+
+  factory MediaFormats.fromJson(Map<String, dynamic> json) {
+    return MediaFormats(
+      json['url'],
+      List<int>.from(json['dims']),
+      json['size'],
+    );
+  }
 }
