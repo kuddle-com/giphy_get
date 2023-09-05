@@ -65,6 +65,10 @@ class TenorCollection {
       return TenorGif.fromJson(result as Map<String, dynamic>, mediaFormat);
     }).toList();
 
+    gifList.retainWhere((element) {
+      return (element.id != null && element.mediaFormats?.url != null);
+    });
+
     return TenorCollection(
       gifList,
       json['next'],

@@ -112,7 +112,10 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
       crossAxisSpacing: _spacing,
       itemBuilder: (ctx, idx) {
         TenorGif _gif = _list[idx];
-        return _TenorGridItem(_gif, _selectedGif);
+        return _TenorGridItem(
+          gif: _gif,
+          selectedGif: _selectedGif,
+        );
       },
     );
   }
@@ -236,10 +239,11 @@ class _TenorGridItem extends StatelessWidget {
   final TenorGif gif;
   final Function(TenorGif) selectedGif;
 
-  const _TenorGridItem(
-    this.gif,
-    this.selectedGif,
-  );
+  const _TenorGridItem({
+    super.key,
+    required this.gif,
+    required this.selectedGif,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -251,63 +255,60 @@ class _TenorGridItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(10.0),
       child: InkWell(
         onTap: () => selectedGif(gif),
-        child: gif.mediaFormats?.url == null
-            ? SizedBox()
-            : ExtendedImage.network(
-                gif.mediaFormats!.url!,
-                semanticLabel: gif.title,
-                cache: true,
-                gaplessPlayback: true,
-                fit: BoxFit.fill,
-                headers: {'accept': 'image/*'},
-                loadStateChanged: (state) => AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 350),
-                  child: case2(
-                    state.extendedImageLoadState,
-                    {
-                      LoadState.loading: AspectRatio(
-                        aspectRatio: _aspectRatio,
-                        child: Container(
-                          color: Theme.of(context).cardColor,
-                        ),
-                      ),
-                      LoadState.completed: AspectRatio(
-                        aspectRatio: _aspectRatio,
-                        child: ExtendedRawImage(
-                          fit: BoxFit.fill,
-                          image: state.extendedImageInfo?.image,
-                        ),
-                      ),
-                      LoadState.failed: AspectRatio(
-                        aspectRatio: _aspectRatio,
-                        child: Container(
-                          color: Theme.of(context).cardColor,
-                        ),
-                      ),
-                    },
-                    AspectRatio(
-                      aspectRatio: _aspectRatio,
-                      child: Container(
-                        color: Theme.of(context).cardColor,
-                      ),
-                    ),
+        child: ExtendedImage.network(
+          gif.mediaFormats!.url!,
+          semanticLabel: gif.title,
+          cache: true,
+          gaplessPlayback: true,
+          fit: BoxFit.fill,
+          headers: {'accept': 'image/*'},
+          loadStateChanged: (state) => AnimatedSwitcher(
+            duration: const Duration(milliseconds: 350),
+            child: _mediaViewState(
+              state.extendedImageLoadState,
+              {
+                LoadState.loading: AspectRatio(
+                  aspectRatio: _aspectRatio,
+                  child: Container(
+                    color: Theme.of(context).cardColor,
                   ),
                 ),
+                LoadState.completed: AspectRatio(
+                  aspectRatio: _aspectRatio,
+                  child: ExtendedRawImage(
+                    fit: BoxFit.fill,
+                    image: state.extendedImageInfo?.image,
+                  ),
+                ),
+                LoadState.failed: AspectRatio(
+                  aspectRatio: _aspectRatio,
+                  child: Container(
+                    color: Theme.of(context).cardColor,
+                  ),
+                ),
+              },
+              AspectRatio(
+                aspectRatio: _aspectRatio,
+                child: Container(
+                  color: Theme.of(context).cardColor,
+                ),
               ),
+            ),
+          ),
+        ),
       ),
     );
   }
 
-  TValue? case2<TOptionType, TValue>(
-      TOptionType selectedOption,
-      Map<TOptionType, TValue> branches, [
-        TValue? defaultValue = null,
-      ]) {
+  TValue? _mediaViewState<TOptionType, TValue>(
+    TOptionType selectedOption,
+    Map<TOptionType, TValue> branches, [
+    TValue? defaultValue = null,
+  ]) {
     if (!branches.containsKey(selectedOption)) {
       return defaultValue;
     }
 
     return branches[selectedOption];
   }
-
 }
