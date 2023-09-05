@@ -112,64 +112,12 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
       crossAxisSpacing: _spacing,
       itemBuilder: (ctx, idx) {
         TenorGif _gif = _list[idx];
-        return _item(_gif);
+        return _TenorGridItem(
+          key: ValueKey(_gif.id!),
+          gif: _gif,
+          selectedGif: _selectedGif,
+        );
       },
-    );
-  }
-
-  Widget _item(TenorGif gif) {
-    final double _aspectRatio = (gif.mediaFormats?.dims?.length ?? 0) >= 2
-        ? gif.mediaFormats!.dims![0] / gif.mediaFormats!.dims![1]
-        : 1.0;
-
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10.0),
-      child: InkWell(
-        onTap: () => _selectedGif(gif),
-        child: gif.mediaFormats?.url == null
-            ? SizedBox()
-            : ExtendedImage.network(
-                gif.mediaFormats!.url!,
-                semanticLabel: gif.title,
-                cache: true,
-                gaplessPlayback: true,
-                fit: BoxFit.fill,
-                headers: {'accept': 'image/*'},
-                loadStateChanged: (state) => AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 350),
-                  child: case2(
-                    state.extendedImageLoadState,
-                    {
-                      LoadState.loading: AspectRatio(
-                        aspectRatio: _aspectRatio,
-                        child: Container(
-                          color: Theme.of(context).cardColor,
-                        ),
-                      ),
-                      LoadState.completed: AspectRatio(
-                        aspectRatio: _aspectRatio,
-                        child: ExtendedRawImage(
-                          fit: BoxFit.fill,
-                          image: state.extendedImageInfo?.image,
-                        ),
-                      ),
-                      LoadState.failed: AspectRatio(
-                        aspectRatio: _aspectRatio,
-                        child: Container(
-                          color: Theme.of(context).cardColor,
-                        ),
-                      ),
-                    },
-                    AspectRatio(
-                      aspectRatio: _aspectRatio,
-                      child: Container(
-                        color: Theme.of(context).cardColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-      ),
     );
   }
 
@@ -252,18 +200,6 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
     _loadMore();
   }
 
-  TValue? case2<TOptionType, TValue>(
-    TOptionType selectedOption,
-    Map<TOptionType, TValue> branches, [
-    TValue? defaultValue = null,
-  ]) {
-    if (!branches.containsKey(selectedOption)) {
-      return defaultValue;
-    }
-
-    return branches[selectedOption];
-  }
-
   GiphyGif _convertTenorGifToGiphyGif(TenorGif tenorGif) {
     return GiphyGif(
       title: tenorGif.title,
@@ -297,5 +233,82 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
         ),
       ),
     );
+  }
+}
+
+class _TenorGridItem extends StatelessWidget {
+  final TenorGif gif;
+  final Function(TenorGif) selectedGif;
+
+  const _TenorGridItem({
+    super.key,
+    required this.gif,
+    required this.selectedGif,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final double _aspectRatio = (gif.mediaFormats?.dims?.length ?? 0) >= 2
+        ? gif.mediaFormats!.dims![0] / gif.mediaFormats!.dims![1]
+        : 1.0;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10.0),
+      child: InkWell(
+        onTap: () => selectedGif(gif),
+        child: ExtendedImage.network(
+          gif.mediaFormats!.url!,
+          semanticLabel: gif.title,
+          cache: true,
+          gaplessPlayback: true,
+          fit: BoxFit.fill,
+          headers: {'accept': 'image/*'},
+          loadStateChanged: (state) => AnimatedSwitcher(
+            duration: const Duration(milliseconds: 350),
+            child: _mediaViewState(
+              state.extendedImageLoadState,
+              {
+                LoadState.loading: AspectRatio(
+                  aspectRatio: _aspectRatio,
+                  child: Container(
+                    color: Theme.of(context).cardColor,
+                  ),
+                ),
+                LoadState.completed: AspectRatio(
+                  aspectRatio: _aspectRatio,
+                  child: ExtendedRawImage(
+                    fit: BoxFit.fill,
+                    image: state.extendedImageInfo?.image,
+                  ),
+                ),
+                LoadState.failed: AspectRatio(
+                  aspectRatio: _aspectRatio,
+                  child: Container(
+                    color: Theme.of(context).cardColor,
+                  ),
+                ),
+              },
+              AspectRatio(
+                aspectRatio: _aspectRatio,
+                child: Container(
+                  color: Theme.of(context).cardColor,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  TValue? _mediaViewState<TOptionType, TValue>(
+    TOptionType selectedOption,
+    Map<TOptionType, TValue> branches, [
+    TValue? defaultValue = null,
+  ]) {
+    if (!branches.containsKey(selectedOption)) {
+      return defaultValue;
+    }
+
+    return branches[selectedOption];
   }
 }
