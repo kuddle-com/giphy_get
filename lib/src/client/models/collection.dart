@@ -53,10 +53,10 @@ class TenorCollection {
   final List<TenorGif> results;
   final String? next;
 
-  TenorCollection({
-    required this.results,
+  const TenorCollection(
+    this.results,
     this.next,
-  });
+  );
 
   factory TenorCollection.fromJson(
       Map<String, dynamic> json, String mediaFormat) {
@@ -66,8 +66,8 @@ class TenorCollection {
     }).toList();
 
     return TenorCollection(
-      results: gifList,
-      next: json['next'],
+      gifList,
+      json['next'],
     );
   }
 }
