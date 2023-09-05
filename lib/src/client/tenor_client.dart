@@ -66,6 +66,23 @@ class TenorClient {
     );
   }
 
+  Future<void> registerShare(
+    String id, {
+    String query = '',
+    String lang = 'en_IN',
+    String country = 'IN',
+  }) async {
+    _getWithAuthorization(baseUri.replace(
+      path: '$_apiVersion/registershare',
+      queryParameters: <String, String>{
+        'id': id,
+        'q': query,
+        'country': country,
+        'locale': lang,
+      },
+    ));
+  }
+
   Future<TenorCollection> _fetchCollection(Uri uri, String mediaFormat) async {
     final response = await _getWithAuthorization(uri);
     return TenorCollection.fromJson(
