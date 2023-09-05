@@ -233,29 +233,29 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
 }
 
 class _TenorGridItem extends StatelessWidget {
-  final TenorGif _gif;
-  final Function(TenorGif) _selectedGif;
+  final TenorGif gif;
+  final Function(TenorGif) selectedGif;
 
   const _TenorGridItem(
-    this._gif,
-    this._selectedGif,
+    this.gif,
+    this.selectedGif,
   );
 
   @override
   Widget build(BuildContext context) {
-    final double _aspectRatio = (_gif.mediaFormats?.dims?.length ?? 0) >= 2
-        ? _gif.mediaFormats!.dims![0] / _gif.mediaFormats!.dims![1]
+    final double _aspectRatio = (gif.mediaFormats?.dims?.length ?? 0) >= 2
+        ? gif.mediaFormats!.dims![0] / gif.mediaFormats!.dims![1]
         : 1.0;
     return ClipRRect(
-      key: Key(_gif.id!),
+      key: Key(gif.id!),
       borderRadius: BorderRadius.circular(10.0),
       child: InkWell(
-        onTap: () => _selectedGif(_gif),
-        child: _gif.mediaFormats?.url == null
+        onTap: () => selectedGif(gif),
+        child: gif.mediaFormats?.url == null
             ? SizedBox()
             : ExtendedImage.network(
-                _gif.mediaFormats!.url!,
-                semanticLabel: _gif.title,
+                gif.mediaFormats!.url!,
+                semanticLabel: gif.title,
                 cache: true,
                 gaplessPlayback: true,
                 fit: BoxFit.fill,
