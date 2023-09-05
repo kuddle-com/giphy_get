@@ -158,11 +158,10 @@ class TenorGif {
   );
 
   factory TenorGif.fromJson(Map<String, dynamic> json, String mediaFormat) {
-    final mediaFormatsData = json['media_formats'][mediaFormat];
     return TenorGif(
       json['id'],
       json['title'],
-      MediaFormats.fromJson(mediaFormatsData),
+      MediaFormats.fromJson(json['media_formats'][mediaFormat]),
     );
   }
 

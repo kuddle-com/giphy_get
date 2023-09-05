@@ -15,8 +15,11 @@ class TenorTabDetail extends StatefulWidget {
   final String type;
   final ScrollController scrollController;
 
-  TenorTabDetail({Key? key, required this.type, required this.scrollController})
-      : super(key: key);
+  const TenorTabDetail({
+    Key? key,
+    required this.type,
+    required this.scrollController,
+  }) : super(key: key);
 
   @override
   _TenorTabDetailState createState() => _TenorTabDetailState();
@@ -115,21 +118,15 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
   }
 
   Widget _item(TenorGif gif) {
-    double _aspectRatio;
-
-    if (gif.mediaFormats != null &&
-        gif.mediaFormats!.dims != null &&
-        gif.mediaFormats!.dims!.length >= 2) {
-      _aspectRatio = gif.mediaFormats!.dims![0] / gif.mediaFormats!.dims![1];
-    } else {
-      _aspectRatio = 1.0;
-    }
+    final double _aspectRatio = (gif.mediaFormats?.dims?.length ?? 0) >= 2
+        ? gif.mediaFormats!.dims![0] / gif.mediaFormats!.dims![1]
+        : 1.0;
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10.0),
       child: InkWell(
         onTap: () => _selectedGif(gif),
-        child: gif.mediaFormats == null || gif.mediaFormats!.url == null
+        child: gif.mediaFormats?.url == null
             ? SizedBox()
             : ExtendedImage.network(
                 gif.mediaFormats!.url!,
@@ -177,7 +174,6 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
   }
 
   Future<void> _loadMore() async {
-    print("Total of collections: ${_collection?.results.length}");
     //Return if is loading or no more gifs
     if (_isLoading) {
       print("No more object");
