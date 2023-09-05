@@ -184,7 +184,9 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
 
     // Tenor Client from library
     TenorClient _client = TenorClient(
-        apiKey: _tabProvider.tenorApiKey, clientKey: _tabProvider.clientKey);
+      apiKey: _tabProvider.tenorApiKey,
+      clientKey: _tabProvider.clientKey,
+    );
     // Get Gif
     // If query text is not null search gif else featured
     if (_appBarProvider.queryText.isNotEmpty) {
@@ -231,9 +233,11 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
   }
 
   // Register selected gif
-  Future<void> _registerShare(String id) async {
+  void _registerShare(String id) {
     TenorClient _client = TenorClient(
-        apiKey: _tabProvider.tenorApiKey, clientKey: _tabProvider.clientKey);
+      apiKey: _tabProvider.tenorApiKey,
+      clientKey: _tabProvider.clientKey,
+    );
     _client.registerShare(id);
   }
 
