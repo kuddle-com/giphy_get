@@ -123,6 +123,7 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
         : 1.0;
 
     return ClipRRect(
+      key: Key(gif.id!),
       borderRadius: BorderRadius.circular(10.0),
       child: InkWell(
         onTap: () => _selectedGif(gif),
