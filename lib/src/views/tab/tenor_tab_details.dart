@@ -176,7 +176,6 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
   Future<void> _loadMore() async {
     //Return if is loading or no more gifs
     if (_isLoading) {
-      print("No more object");
       return;
     }
 
