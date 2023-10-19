@@ -25,6 +25,7 @@ class TenorClient {
       String lang = 'en_IN',
       String country = 'IN',
       String mediaFormat = TenorType.gif,
+      String previewFormat = TenorType.mediumGif,
       String? next}) async {
     return _fetchCollection(
       baseUri.replace(
@@ -34,11 +35,12 @@ class TenorClient {
           'contentfilter': rating,
           'country': country,
           'locale': lang,
-          'media_filter': mediaFormat,
+          'media_filter': "$mediaFormat,$previewFormat",
           if (next != null) 'pos': next,
         },
       ),
       mediaFormat,
+      previewFormat,
     );
   }
 
@@ -48,6 +50,7 @@ class TenorClient {
       String lang = 'en_IN',
       String country = 'IN',
       String mediaFormat = TenorType.gif,
+      String previewFormat = TenorType.mediumGif,
       String? next}) async {
     return _fetchCollection(
       baseUri.replace(
@@ -58,11 +61,12 @@ class TenorClient {
           'contentfilter': rating,
           'country': country,
           'locale': lang,
-          'media_filter': mediaFormat,
+          'media_filter': "$mediaFormat,$previewFormat",
           if (next != null) 'pos': next,
         },
       ),
       mediaFormat,
+      previewFormat,
     );
   }
 
@@ -83,10 +87,10 @@ class TenorClient {
     ));
   }
 
-  Future<TenorCollection> _fetchCollection(Uri uri, String mediaFormat) async {
+  Future<TenorCollection> _fetchCollection(Uri uri, String mediaFormat, String previewFormat) async {
     final response = await _getWithAuthorization(uri);
     return TenorCollection.fromJson(
-        json.decode(response.body) as Map<String, dynamic>, mediaFormat);
+        json.decode(response.body) as Map<String, dynamic>, mediaFormat, previewFormat);
   }
 
   Future<Response> _getWithAuthorization(Uri uri) async {
