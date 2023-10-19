@@ -149,19 +149,23 @@ class GiphyGif {
 class TenorGif {
   final String? id;
   final String? title;
-  final MediaFormats? mediaFormats;
+  final MediaFormats? media;
+  final MediaFormats? previewMedia;
 
   const TenorGif(
     this.id,
     this.title,
-    this.mediaFormats,
+    this.media,
+    this.previewMedia,
   );
 
-  factory TenorGif.fromJson(Map<String, dynamic> json, String mediaFormat) {
+  factory TenorGif.fromJson(
+      Map<String, dynamic> json, String mediaFormat, String previewFormat) {
     return TenorGif(
       json['id'],
       json['title'],
       MediaFormats.fromJson(json['media_formats'][mediaFormat]),
+      MediaFormats.fromJson(json['media_formats'][previewFormat]),
     );
   }
 }

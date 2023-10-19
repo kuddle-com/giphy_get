@@ -142,7 +142,8 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
         lang: _tabProvider.tenorLang,
         country: 'IN',
         rating: _tabProvider.tenorRating,
-        mediaFormat: _tabProvider.tenorMediaFilter,
+        previewFormat: _tabProvider.tenorPreviewFormat,
+        mediaFormat: _tabProvider.tenorMediaFormat,
         next: _collection?.next,
       );
     } else {
@@ -150,7 +151,8 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
         lang: _tabProvider.tenorLang,
         country: 'IN',
         rating: _tabProvider.tenorRating,
-        mediaFormat: _tabProvider.tenorMediaFilter,
+        mediaFormat: _tabProvider.tenorMediaFormat,
+        previewFormat: _tabProvider.tenorPreviewFormat,
         next: _collection?.next,
       );
     }
@@ -222,10 +224,10 @@ class _TenorTabDetailState extends State<TenorTabDetail> {
       user: null,
       images: GiphyImages(
         fixedWidth: GiphyFullImage(
-          url: tenorGif.mediaFormats?.url ?? '',
-          width: tenorGif.mediaFormats?.dims?[0].toString() ?? '200',
-          height: tenorGif.mediaFormats?.dims?[1].toString() ?? '200',
-          size: tenorGif.mediaFormats?.size.toString() ?? '',
+          url: tenorGif.media?.url ?? '',
+          width: tenorGif.media?.dims?[0].toString() ?? '200',
+          height: tenorGif.media?.dims?[1].toString() ?? '200',
+          size: tenorGif.media?.size.toString() ?? '',
           mp4: null,
           mp4Size: null,
           webp: null,
@@ -248,15 +250,15 @@ class _TenorGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double _aspectRatio = (gif.mediaFormats?.dims?.length ?? 0) >= 2
-        ? gif.mediaFormats!.dims![0] / gif.mediaFormats!.dims![1]
+    final double _aspectRatio = (gif.previewMedia?.dims?.length ?? 0) >= 2
+        ? gif.previewMedia!.dims![0] / gif.previewMedia!.dims![1]
         : 1.0;
     return ClipRRect(
       borderRadius: BorderRadius.circular(10.0),
       child: InkWell(
         onTap: () => selectedGif(gif),
         child: ExtendedImage.network(
-          gif.mediaFormats!.url!,
+          gif.previewMedia!.url!,
           semanticLabel: gif.title,
           cache: true,
           gaplessPlayback: true,

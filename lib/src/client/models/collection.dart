@@ -59,14 +59,15 @@ class TenorCollection {
   );
 
   factory TenorCollection.fromJson(
-      Map<String, dynamic> json, String mediaFormat) {
+      Map<String, dynamic> json, String mediaFormat, String previewFormat) {
     final resultsList = json['results'] as List<dynamic>;
     final List<TenorGif> gifList = resultsList.map((result) {
-      return TenorGif.fromJson(result as Map<String, dynamic>, mediaFormat);
+      return TenorGif.fromJson(
+          result as Map<String, dynamic>, mediaFormat, previewFormat);
     }).toList();
 
     gifList.retainWhere((element) {
-      return (element.id != null && element.mediaFormats?.url != null);
+      return (element.id != null && element.media?.url != null && element.previewMedia?.url != null);
     });
 
     return TenorCollection(
