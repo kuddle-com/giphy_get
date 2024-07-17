@@ -26,8 +26,8 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   mockito: ^5.4.2
-  pedantic: ^1.11.1
   matcher: ^0.12.15
+  flutter_lints: ^4.0.0
 
 flutter:
   assets:
